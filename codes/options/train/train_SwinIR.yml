@@ -1,0 +1,57 @@
+# python train.py -opt './options/train/train_SwinIR.yml'
+
+name: SwinIR
+task: sr
+scale: 4
+gpu_ids: '0'
+is_train: true
+use_tb_logger: true
+
+network:
+  which_model: SwinIR
+  in_chans: 3
+  img_size: 32
+  window_size: 8
+  img_range: 1
+  depths: [6, 6, 6, 6]
+  embed_dim: 60
+  num_heads: [6, 6, 6, 6]
+  mlp_ratio: 2
+  upsampler: 'pixelshuffledirect'
+  resi_connection: '1conv'
+
+datasets:
+  train:
+    name: DIV2K
+    mode: LQGT
+    data_type: img
+    dataroot_GT: /mount/yuanbiao/datasets/SISR_DATA/DIV2K_4x_sub/HR
+    dataroot_LQ: /mount/yuanbiao/datasets/SISR_DATA/DIV2K_4x_sub/LR
+    n_workers: 4
+    batch_size: 64
+    use_shuffle: true
+    use_flip: true
+    use_rot: true
+  val:
+    name: Set5
+    mode: LQGT
+    data_type: img
+    dataroot_GT: /mount/yuanbiao/datasets/SISR_DATA/Test/Set5/GTmod12
+    dataroot_LQ: /mount/yuanbiao/datasets/SISR_DATA/Test/Set5/LRbicx4
+    save_results: false
+
+path:
+  pretrain_model:
+  strict_load: true
+  resume_state:
+
+train:
+  loss: fpl
+  lr: !!float 2e-4
+  eta_min: !!float 1e-6
+  manual_seed:
+  niter: 500000
+  T_period: 500000
+  print_freq: 200
+  val_freq: 5000
+  save_freq: 5000

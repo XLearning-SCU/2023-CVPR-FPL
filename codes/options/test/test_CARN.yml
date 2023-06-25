@@ -1,0 +1,62 @@
+# python test.py -opt './options/test/test_CARN.yml'
+
+name: CARN_FPL
+task: sr
+scale: 4
+gpu_ids: '3'
+is_train: false
+
+crop_border: ~ 
+# crop border when evaluation. If None(~), crop the scale pixels
+
+network:
+  which_model: CARN_M
+  in_nc: 3
+  out_nc: 3
+  nf: 64
+  scale: 4
+  group: 4
+
+path:
+  pretrain_model: ../experiments/pretrained_models/4x_CARN_FPL.pth
+
+train:
+  loss: fpl
+
+datasets:
+  test1:
+    name: Set5
+    mode: LQGT
+    data_type: img
+    dataroot_GT: /mount/yuanbiao/datasets/SISR_DATA/Test/Set5/GTmod12
+    dataroot_LQ: /mount/yuanbiao/datasets/SISR_DATA/Test/Set5/LRbicx4
+  test2:
+    name: Set14
+    mode: LQGT
+    data_type: img
+    dataroot_GT: /mount/yuanbiao/datasets/SISR_DATA/Test/Set14/GTmod12
+    dataroot_LQ: /mount/yuanbiao/datasets/SISR_DATA/Test/Set14/LRbicx4
+  test3:
+    name: BSD100
+    mode: LQGT
+    data_type: img
+    dataroot_GT: /mount/yuanbiao/datasets/SISR_DATA/Test/BSD100/GTmod12
+    dataroot_LQ: /mount/yuanbiao/datasets/SISR_DATA/Test/BSD100/LRbicx4
+  test4:
+    name: Manga109
+    mode: LQGT
+    data_type: img
+    dataroot_GT: /mount/yuanbiao/datasets/SISR_DATA/Test/Manga109/GTmod12
+    dataroot_LQ: /mount/yuanbiao/datasets/SISR_DATA/Test/Manga109/LRbicx4
+  test5:
+    name: Urban100
+    mode: LQGT
+    data_type: img
+    dataroot_GT: /mount/yuanbiao/datasets/SISR_DATA/Test/Urban100/GTmod12
+    dataroot_LQ: /mount/yuanbiao/datasets/SISR_DATA/Test/Urban100/LRbicx4
+  test6:
+    name: Test2K
+    mode: LQGT
+    data_type: img
+    dataroot_GT: /mount/yuanbiao/datasets/SISR_DATA/Test/Test2K/GTmod12
+    dataroot_LQ: /mount/yuanbiao/datasets/SISR_DATA/Test/Test2K/LRbicx4

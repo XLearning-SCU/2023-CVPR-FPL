@@ -1,0 +1,52 @@
+# python train.py -opt './options/train/train_CARN.yml'
+
+name: CARN
+task: sr
+scale: 4
+gpu_ids: '0'
+is_train: true
+use_tb_logger: true
+
+network:
+  which_model: CARN_M
+  in_nc: 3
+  out_nc: 3
+  nf: 64
+  scale: 4
+  group: 4
+
+datasets:
+  train:
+    name: DIV2K
+    mode: LQGT
+    data_type: img
+    dataroot_GT: /mount/yuanbiao/datasets/SISR_DATA/DIV2K_4x_sub/HR
+    dataroot_LQ: /mount/yuanbiao/datasets/SISR_DATA/DIV2K_4x_sub/LR
+    n_workers: 4
+    batch_size: 64
+    use_shuffle: true
+    use_flip: true
+    use_rot: true
+  val:
+    name: Set5
+    mode: LQGT
+    data_type: img
+    dataroot_GT: /mount/yuanbiao/datasets/SISR_DATA/Test/Set5/GTmod12
+    dataroot_LQ: /mount/yuanbiao/datasets/SISR_DATA/Test/Set5/LRbicx4
+    save_results: false
+
+path:
+  pretrain_model:
+  strict_load: true
+  resume_state:
+
+train:
+  loss: fpl
+  lr: !!float 1e-3
+  eta_min: !!float 1e-6
+  manual_seed:
+  niter: 500000
+  T_period: 500000
+  print_freq: 200
+  val_freq: 5000
+  save_freq: 5000
