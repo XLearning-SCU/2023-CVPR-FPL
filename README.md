@@ -1,3 +1,7 @@
-PyTorch implementation for Rethinking Image Super Resolution from Long-Tailed Distribution Learning Perspective.
+PyTorch implementation for **Rethinking Image Super Resolution from Long-Tailed Distribution Learning Perspective**.
 
-We will organize and release the code as soon.
+Our codes version and training data (1.59M) is based on [ClassSR](https://github.com/XPixelGroup/ClassSR). Thanks for excellent work!
+
+The training and testing script could be seen in the corresponding yaml option file.
+
+Modifying the options to your configurations and running the script.
